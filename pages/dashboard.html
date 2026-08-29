@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — FaceProfile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <style>
+    .dashboard-welcome {
+      margin-bottom: var(--space-8);
+    }
+
+    .dashboard-welcome-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .dashboard-welcome-subtitle {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+    }
+
+    .dashboard-search-cta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      padding: var(--space-6);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+      border-radius: var(--radius-xl);
+      color: var(--color-text-inverse);
+      margin-bottom: var(--space-8);
+    }
+
+    .dashboard-search-cta-content {
+      flex: 1;
+    }
+
+    .dashboard-search-cta-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-2);
+    }
+
+    .dashboard-search-cta-text {
+      font-size: var(--font-size-sm);
+      opacity: 0.9;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-8);
+    }
+
+    .dashboard-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+
+    .dashboard-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-4);
+    }
+
+    .dashboard-card-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+    }
+
+    .dashboard-card-link {
+      font-size: var(--font-size-sm);
+      color: var(--color-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .profile-completion {
+      margin-bottom: var(--space-6);
+    }
+
+    .profile-completion-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: var(--space-3);
+    }
+
+    .profile-completion-label {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text);
+    }
+
+    .profile-completion-value {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .profile-completion-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+    }
+
+    .profile-completion-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .profile-completion-item-icon {
+      width: 16px;
+      height: 16px;
+      color: var(--color-success);
+    }
+
+    .profile-completion-item-pending {
+      color: var(--color-text-muted);
+    }
+
+    .profile-completion-item-pending .profile-completion-item-icon {
+      color: var(--color-text-muted);
+    }
+
+    .recent-searches {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .recent-search-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3);
+      background-color: var(--color-background);
+      border-radius: var(--radius-lg);
+      transition: background-color var(--transition-fast);
+    }
+
+    .recent-search-item:hover {
+      background-color: var(--color-background-alt);
+    }
+
+    .recent-search-image {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .recent-search-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .recent-search-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .recent-search-name {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text);
+    }
+
+    .recent-search-date {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+    }
+
+    .recent-search-result {
+      font-size: var(--font-size-xs);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-full);
+    }
+
+    .privacy-status {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .privacy-status-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-3);
+      background-color: var(--color-background);
+      border-radius: var(--radius-lg);
+    }
+
+    .privacy-status-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-text);
+    }
+
+    .quick-actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+
+    .quick-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      background-color: var(--color-background);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      text-decoration: none;
+      color: var(--color-text);
+    }
+
+    .quick-action-btn:hover {
+      background-color: var(--color-primary-light);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    .quick-action-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .quick-action-label {
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-medium);
+      text-align: center;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-search-cta {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .quick-actions {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar-inner">
+      <button class="navbar-mobile-toggle" aria-label="Toggle menu" onclick="toggleSidebar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <a href="../index.html" class="navbar-brand" aria-label="FaceProfile Home">
+        <div class="navbar-brand-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+          </svg>
+        </div>
+        FaceProfile
+      </a>
+      <div class="navbar-actions">
+        <a href="search.html" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+          Search
+        </a>
+        <div class="navbar-user" onclick="toggleUserMenu()">
+          <div class="avatar avatar-sm">JS</div>
+          <span class="navbar-user-name">John Smith</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Dashboard navigation">
+    <div class="sidebar-inner">
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">Main</p>
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="sidebar-link active">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Dashboard
+          </a>
+          <a href="search.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+            </svg>
+            Search
+          </a>
+          <a href="profile.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            My Profile
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">Account</p>
+        <nav class="sidebar-nav">
+          <a href="profile-edit.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Edit Profile
+          </a>
+          <a href="privacy.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Privacy Center
+          </a>
+          <a href="settings.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Settings
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <a href="../index.html" class="sidebar-link">
+          <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          Log Out
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-content">
+      <!-- Welcome Section -->
+      <div class="dashboard-welcome">
+        <h1 class="dashboard-welcome-title">Welcome back, John</h1>
+        <p class="dashboard-welcome-subtitle">Here's what's happening with your profile today.</p>
+      </div>
+
+      <!-- Search CTA -->
+      <a href="search.html" class="dashboard-search-cta" style="text-decoration: none;">
+        <div class="dashboard-search-cta-content">
+          <h2 class="dashboard-search-cta-title">Search by Photo</h2>
+          <p class="dashboard-search-cta-text">Upload a photograph to find possible matching profiles from our consent-based database.</p>
+        </div>
+        <div class="btn btn-secondary" style="background: white; color: var(--color-primary);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.3-4.3"/>
+          </svg>
+          Start Search
+        </div>
+      </a>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+        <!-- Left Column -->
+        <div>
+          <!-- Recent Searches -->
+          <div class="dashboard-card">
+            <div class="dashboard-card-header">
+              <h3 class="dashboard-card-title">Recent Searches</h3>
+              <a href="#" class="dashboard-card-link">View all</a>
+            </div>
+            <div class="recent-searches">
+              <div class="recent-search-item">
+                <div class="recent-search-image">
+                  <div class="avatar avatar-sm" style="width: 100%; height: 100%; border-radius: var(--radius-lg);">JS</div>
+                </div>
+                <div class="recent-search-info">
+                  <p class="recent-search-name">John Smith</p>
+                  <p class="recent-search-date">2 hours ago</p>
+                </div>
+                <span class="badge badge-success recent-search-result">High match</span>
+              </div>
+              <div class="recent-search-item">
+                <div class="recent-search-image">
+                  <div class="avatar avatar-sm" style="width: 100%; height: 100%; border-radius: var(--radius-lg);">AB</div>
+                </div>
+                <div class="recent-search-info">
+                  <p class="recent-search-name">Alex Brown</p>
+                  <p class="recent-search-date">Yesterday</p>
+                </div>
+                <span class="badge badge-warning recent-search-result">Medium match</span>
+              </div>
+              <div class="recent-search-item">
+                <div class="recent-search-image">
+                  <div class="avatar avatar-sm" style="width: 100%; height: 100%; border-radius: var(--radius-lg);">DL</div>
+                </div>
+                <div class="recent-search-info">
+                  <p class="recent-search-name">David Lee</p>
+                  <p class="recent-search-date">3 days ago</p>
+                </div>
+                <span class="badge badge-neutral recent-search-result">Low match</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="dashboard-card" style="margin-top: var(--space-6);">
+            <div class="dashboard-card-header">
+              <h3 class="dashboard-card-title">Quick Actions</h3>
+            </div>
+            <div class="quick-actions">
+              <a href="search.html" class="quick-action-btn">
+                <svg class="quick-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"/>
+                  <path d="m21 21-4.3-4.3"/>
+                </svg>
+                <span class="quick-action-label">New Search</span>
+              </a>
+              <a href="profile-edit.html" class="quick-action-btn">
+                <svg class="quick-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                <span class="quick-action-label">Edit Profile</span>
+              </a>
+              <a href="privacy.html" class="quick-action-btn">
+                <svg class="quick-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <span class="quick-action-label">Privacy</span>
+              </a>
+              <a href="settings.html" class="quick-action-btn">
+                <svg class="quick-action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"/>
+                  <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                <span class="quick-action-label">Settings</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div>
+          <!-- Profile Completion -->
+          <div class="dashboard-card">
+            <div class="dashboard-card-header">
+              <h3 class="dashboard-card-title">Your Profile</h3>
+              <a href="profile.html" class="dashboard-card-link">View</a>
+            </div>
+            <div class="profile-completion">
+              <div class="profile-completion-header">
+                <span class="profile-completion-label">Completion</span>
+                <span class="profile-completion-value">85%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar" style="width: 85%;"></div>
+              </div>
+              <div class="profile-completion-items">
+                <div class="profile-completion-item">
+                  <svg class="profile-completion-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  Basic information
+                </div>
+                <div class="profile-completion-item">
+                  <svg class="profile-completion-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  Profile photo
+                </div>
+                <div class="profile-completion-item">
+                  <svg class="profile-completion-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                  Bio
+                </div>
+                <div class="profile-completion-item profile-completion-item-pending">
+                  <svg class="profile-completion-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                  </svg>
+                  Skills (add 3+)
+                </div>
+                <div class="profile-completion-item profile-completion-item-pending">
+                  <svg class="profile-completion-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                  </svg>
+                  Social links
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy Status -->
+          <div class="dashboard-card" style="margin-top: var(--space-6);">
+            <div class="dashboard-card-header">
+              <h3 class="dashboard-card-title">Privacy Status</h3>
+              <a href="privacy.html" class="dashboard-card-link">Manage</a>
+            </div>
+            <div class="privacy-status">
+              <div class="privacy-status-item">
+                <span class="privacy-status-label">Profile visibility</span>
+                <span class="badge badge-success">Public</span>
+              </div>
+              <div class="privacy-status-item">
+                <span class="privacy-status-label">Face matching</span>
+                <span class="badge badge-success">Enabled</span>
+              </div>
+              <div class="privacy-status-item">
+                <span class="privacy-status-label">Search participation</span>
+                <span class="badge badge-success">Active</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
+
+    function toggleUserMenu() {
+      // User menu toggle logic
+    }
+  </script>
+</body>
+</html>

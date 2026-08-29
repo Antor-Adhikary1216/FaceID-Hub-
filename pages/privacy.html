@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Center — FaceProfile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <style>
+    .privacy-page {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .privacy-header {
+      margin-bottom: var(--space-8);
+    }
+
+    .privacy-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .privacy-subtitle {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+    }
+
+    .privacy-section {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    .privacy-section-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+    }
+
+    .privacy-section-description {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-6);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .privacy-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4);
+      background-color: var(--color-background);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+
+    .privacy-option:last-child {
+      margin-bottom: 0;
+    }
+
+    .privacy-option-info {
+      flex: 1;
+    }
+
+    .privacy-option-label {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .privacy-option-description {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .danger-zone {
+      border-color: var(--color-error);
+    }
+
+    .danger-zone .privacy-section-title {
+      color: var(--color-error);
+    }
+
+    .danger-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-4);
+      background-color: var(--color-error-light);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-3);
+    }
+
+    .danger-option:last-child {
+      margin-bottom: 0;
+    }
+
+    .danger-option-info {
+      flex: 1;
+    }
+
+    .danger-option-label {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .danger-option-description {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .modal-backdrop {
+      display: none;
+    }
+
+    .modal-backdrop.active {
+      display: flex;
+    }
+
+    @media (max-width: 768px) {
+      .privacy-option {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+      }
+
+      .danger-option {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar-inner">
+      <button class="navbar-mobile-toggle" aria-label="Toggle menu" onclick="toggleSidebar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <a href="../index.html" class="navbar-brand" aria-label="FaceProfile Home">
+        <div class="navbar-brand-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+          </svg>
+        </div>
+        FaceProfile
+      </a>
+      <div class="navbar-actions">
+        <div class="navbar-user">
+          <div class="avatar avatar-sm">JS</div>
+          <span class="navbar-user-name">John Smith</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Dashboard navigation">
+    <div class="sidebar-inner">
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">Main</p>
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Dashboard
+          </a>
+          <a href="search.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+            </svg>
+            Search
+          </a>
+          <a href="profile.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            My Profile
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">Account</p>
+        <nav class="sidebar-nav">
+          <a href="profile-edit.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Edit Profile
+          </a>
+          <a href="privacy.html" class="sidebar-link active">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Privacy Center
+          </a>
+          <a href="settings.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Settings
+          </a>
+        </nav>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-content privacy-page">
+      <!-- Privacy Header -->
+      <div class="privacy-header">
+        <h1 class="privacy-title">Privacy Center</h1>
+        <p class="privacy-subtitle">Control how your information is shared and used on FaceProfile.</p>
+      </div>
+
+      <!-- Profile Visibility -->
+      <div class="privacy-section">
+        <h2 class="privacy-section-title">Profile Visibility</h2>
+        <p class="privacy-section-description">
+          Control who can see your profile when someone searches for you. Your profile information will only be shared with users who have a possible face match.
+        </p>
+        <div class="privacy-option">
+          <div class="privacy-option-info">
+            <p class="privacy-option-label">Profile visibility</p>
+            <p class="privacy-option-description">Make your profile visible to search results</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Face Matching -->
+      <div class="privacy-section">
+        <h2 class="privacy-section-title">Face Matching</h2>
+        <p class="privacy-section-description">
+          Enable or disable face matching for your profile. When enabled, your profile may appear in search results when someone uploads a similar photo.
+        </p>
+        <div class="privacy-option">
+          <div class="privacy-option-info">
+            <p class="privacy-option-label">Face matching</p>
+            <p class="privacy-option-description">Allow your profile to appear in face search results</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Search Participation -->
+      <div class="privacy-section">
+        <h2 class="privacy-section-title">Search Participation</h2>
+        <p class="privacy-section-description">
+          Control whether your profile is included in the search database. This does not affect your ability to search for others.
+        </p>
+        <div class="privacy-option">
+          <div class="privacy-option-info">
+            <p class="privacy-option-label">Search participation</p>
+            <p class="privacy-option-description">Include your profile in the searchable database</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Social Links -->
+      <div class="privacy-section">
+        <h2 class="privacy-section-title">Social Links</h2>
+        <p class="privacy-section-description">
+          Control which social links are visible on your profile. These links are provided by you and can be removed at any time.
+        </p>
+        <div class="privacy-option">
+          <div class="privacy-option-info">
+            <p class="privacy-option-label">Show social links</p>
+            <p class="privacy-option-description">Display your social links on your public profile</p>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" checked>
+            <span class="toggle-track">
+              <span class="toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Biometric Data -->
+      <div class="privacy-section">
+        <h2 class="privacy-section-title">Biometric Data</h2>
+        <p class="privacy-section-description">
+          Your face representation is generated from your profile photo and used for matching. You can delete this data at any time, which will remove your profile from search results.
+        </p>
+        <div class="privacy-option">
+          <div class="privacy-option-info">
+            <p class="privacy-option-label">Biometric data stored</p>
+            <p class="privacy-option-description">Face representation for matching purposes</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="showBiometricModal()">
+            Manage
+          </button>
+        </div>
+      </div>
+
+      <!-- Danger Zone -->
+      <div class="privacy-section danger-zone">
+        <h2 class="privacy-section-title">Danger Zone</h2>
+        <p class="privacy-section-description">
+          These actions are permanent and cannot be undone. Please proceed with caution.
+        </p>
+        <div class="danger-option">
+          <div class="danger-option-info">
+            <p class="danger-option-label">Delete biometric data</p>
+            <p class="danger-option-description">Remove your face representation from the system</p>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="showDeleteBiometricModal()">
+            Delete
+          </button>
+        </div>
+        <div class="danger-option">
+          <div class="danger-option-info">
+            <p class="danger-option-label">Delete account</p>
+            <p class="danger-option-description">Permanently delete your account and all associated data</p>
+          </div>
+          <button class="btn btn-danger btn-sm" onclick="showDeleteAccountModal()">
+            Delete Account
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Delete Biometric Data Modal -->
+  <div class="modal-backdrop" id="deleteBiometricModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Delete Biometric Data</h3>
+        <button class="modal-close" onclick="closeModal('deleteBiometricModal')" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: var(--space-4); color: var(--color-text-secondary);">
+          Are you sure you want to delete your biometric data? This will remove your face representation from the system and your profile will no longer appear in search results.
+        </p>
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-muted);">
+          You can re-enroll by uploading a new profile photo.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('deleteBiometricModal')">Cancel</button>
+        <button class="btn btn-danger" onclick="deleteBiometricData()">Delete Data</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Account Modal -->
+  <div class="modal-backdrop" id="deleteAccountModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Delete Account</h3>
+        <button class="modal-close" onclick="closeModal('deleteAccountModal')" aria-label="Close modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="margin-bottom: var(--space-4); color: var(--color-text-secondary);">
+          Are you sure you want to delete your account? This action is permanent and cannot be undone.
+        </p>
+        <p style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-bottom: var(--space-4);">
+          This will permanently delete:
+        </p>
+        <ul style="font-size: var(--font-size-sm); color: var(--color-text-muted); margin-left: var(--space-4); list-style: disc;">
+          <li style="margin-bottom: var(--space-1);">Your profile information</li>
+          <li style="margin-bottom: var(--space-1);">Your biometric data</li>
+          <li style="margin-bottom: var(--space-1);">Your search history</li>
+          <li style="margin-bottom: var(--space-1);">All associated data</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeModal('deleteAccountModal')">Cancel</button>
+        <button class="btn btn-danger" onclick="deleteAccount()">Delete Account</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
+
+    function showBiometricModal() {
+      document.getElementById('deleteBiometricModal').classList.add('active');
+    }
+
+    function showDeleteBiometricModal() {
+      document.getElementById('deleteBiometricModal').classList.add('active');
+    }
+
+    function showDeleteAccountModal() {
+      document.getElementById('deleteAccountModal').classList.add('active');
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove('active');
+    }
+
+    function deleteBiometricData() {
+      alert('Biometric data deleted. Your profile will no longer appear in search results.');
+      closeModal('deleteBiometricModal');
+    }
+
+    function deleteAccount() {
+      alert('Account deleted. All your data has been permanently removed.');
+      window.location.href = '../index.html';
+    }
+
+    // Close modal on backdrop click
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+      backdrop.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

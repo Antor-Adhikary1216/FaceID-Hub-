@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up — FaceProfile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .auth-left {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8);
+      background-color: var(--color-surface);
+    }
+
+    .auth-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8);
+      background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+      color: var(--color-text-inverse);
+    }
+
+    .auth-form-container {
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+      text-decoration: none;
+      margin-bottom: var(--space-8);
+    }
+
+    .auth-logo-icon {
+      width: 36px;
+      height: 36px;
+      background-color: var(--color-primary);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-inverse);
+    }
+
+    .auth-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-2);
+    }
+
+    .auth-subtitle {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-8);
+    }
+
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin: var(--space-4) 0;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background-color: var(--color-border);
+    }
+
+    .auth-divider-text {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-muted);
+    }
+
+    .auth-social-buttons {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    .auth-social-btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text);
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .auth-social-btn:hover {
+      background-color: var(--color-background-alt);
+      border-color: var(--color-border-hover);
+    }
+
+    .auth-footer {
+      margin-top: var(--space-6);
+      text-align: center;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .auth-footer a {
+      color: var(--color-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .auth-right-content {
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .auth-right-title {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      margin-bottom: var(--space-4);
+    }
+
+    .auth-right-text {
+      font-size: var(--font-size-lg);
+      opacity: 0.9;
+      line-height: var(--line-height-relaxed);
+    }
+
+    .auth-features {
+      margin-top: var(--space-8);
+      text-align: left;
+    }
+
+    .auth-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+
+    .auth-feature-icon {
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-full);
+    }
+
+    .auth-feature-text {
+      font-size: var(--font-size-sm);
+      opacity: 0.9;
+    }
+
+    .password-input-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: var(--space-3);
+      top: 50%;
+      transform: translateY(-50%);
+      padding: var(--space-1);
+      background: none;
+      border: none;
+      color: var(--color-text-muted);
+      cursor: pointer;
+    }
+
+    @media (max-width: 1024px) {
+      .auth-right {
+        display: none;
+      }
+
+      .auth-left {
+        padding: var(--space-6);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .auth-left {
+        padding: var(--space-4);
+      }
+
+      .auth-social-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-page">
+    <!-- Left Side - Form -->
+    <div class="auth-left">
+      <div class="auth-form-container">
+        <a href="../index.html" class="auth-logo" aria-label="FaceProfile Home">
+          <div class="auth-logo-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+            </svg>
+          </div>
+          FaceProfile
+        </a>
+
+        <h1 class="auth-title">Create your account</h1>
+        <p class="auth-subtitle">Join a community of professionals who control their digital identity.</p>
+
+        <form class="auth-form" id="signupForm" novalidate>
+          <div class="input-group">
+            <label for="name" class="input-label">Full name</label>
+            <input type="text" id="name" name="name" class="input" placeholder="John Smith" required autocomplete="name">
+          </div>
+
+          <div class="input-group">
+            <label for="email" class="input-label">Email address</label>
+            <input type="email" id="email" name="email" class="input" placeholder="john@example.com" required autocomplete="email">
+          </div>
+
+          <div class="input-group">
+            <label for="password" class="input-label">Password</label>
+            <div class="password-input-wrapper">
+              <input type="password" id="password" name="password" class="input" placeholder="Create a strong password" required autocomplete="new-password" minlength="8">
+              <button type="button" class="password-toggle" aria-label="Toggle password visibility" onclick="togglePassword('password')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+            <p class="input-hint">Must be at least 8 characters</p>
+          </div>
+
+          <div class="input-group">
+            <label for="confirmPassword" class="input-label">Confirm password</label>
+            <div class="password-input-wrapper">
+              <input type="password" id="confirmPassword" name="confirmPassword" class="input" placeholder="Confirm your password" required autocomplete="new-password">
+              <button type="button" class="password-toggle" aria-label="Toggle password visibility" onclick="togglePassword('confirmPassword')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="checkbox">
+            <input type="checkbox" id="terms" name="terms" required>
+            <label for="terms" class="checkbox-label">
+              I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg" style="width: 100%;">
+            Create Account
+          </button>
+        </form>
+
+        <p class="auth-footer">
+          Already have an account? <a href="login.html">Log in</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Side - Features -->
+    <div class="auth-right">
+      <div class="auth-right-content">
+        <h2 class="auth-right-title">Control Your Digital Identity</h2>
+        <p class="auth-right-text">
+          Create a professional profile that showcases who you are and what you do.
+        </p>
+
+        <div class="auth-features">
+          <div class="auth-feature">
+            <div class="auth-feature-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <p class="auth-feature-text">Showcase your skills and projects</p>
+          </div>
+          <div class="auth-feature">
+            <div class="auth-feature-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <p class="auth-feature-text">Connect your professional social links</p>
+          </div>
+          <div class="auth-feature">
+            <div class="auth-feature-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <p class="auth-feature-text">Control who can find your profile</p>
+          </div>
+          <div class="auth-feature">
+            <div class="auth-feature-icon" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </div>
+            <p class="auth-feature-text">Delete your data anytime</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword(fieldId) {
+      const field = document.getElementById(fieldId);
+      const type = field.type === 'password' ? 'text' : 'password';
+      field.type = type;
+    }
+
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Form validation and submission logic
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (password !== confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      // Redirect to dashboard
+      window.location.href = 'dashboard.html';
+    });
+  </script>
+</body>
+</html>

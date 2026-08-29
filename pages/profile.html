@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Profile — FaceProfile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/design-system.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <style>
+    .profile-page {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+
+    .profile-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+    }
+
+    .profile-card {
+      background-color: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      margin-bottom: var(--space-6);
+    }
+
+    .profile-banner {
+      height: 120px;
+      background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary));
+    }
+
+    .profile-content {
+      padding: var(--space-6);
+      padding-top: 0;
+    }
+
+    .profile-header-info {
+      display: flex;
+      gap: var(--space-4);
+      margin-top: -40px;
+      margin-bottom: var(--space-6);
+    }
+
+    .profile-avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: var(--radius-full);
+      border: 4px solid var(--color-surface);
+      background-color: var(--color-surface);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .profile-avatar .avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-3xl);
+    }
+
+    .profile-info {
+      flex: 1;
+      padding-top: 48px;
+    }
+
+    .profile-name {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .profile-job-title {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    .profile-stats {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .profile-stat {
+      text-align: center;
+    }
+
+    .profile-stat-value {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text);
+    }
+
+    .profile-stat-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+    }
+
+    .profile-section {
+      margin-bottom: var(--space-6);
+    }
+
+    .profile-section-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text);
+      margin-bottom: var(--space-4);
+    }
+
+    .profile-bio {
+      font-size: var(--font-size-base);
+      color: var(--color-text-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .profile-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    .profile-skill {
+      padding: var(--space-1) var(--space-3);
+      background-color: var(--color-background-alt);
+      color: var(--color-text-secondary);
+      border-radius: var(--radius-full);
+      font-size: var(--font-size-sm);
+    }
+
+    .profile-projects {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .profile-project {
+      padding: var(--space-4);
+      background-color: var(--color-background);
+      border-radius: var(--radius-lg);
+    }
+
+    .profile-project-name {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text);
+      margin-bottom: var(--space-1);
+    }
+
+    .profile-project-description {
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .profile-social-links {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+
+    .profile-social-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background-color: var(--color-background);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      transition: background-color var(--transition-fast);
+    }
+
+    .profile-social-link:hover {
+      background-color: var(--color-background-alt);
+    }
+
+    .profile-social-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--color-text-secondary);
+    }
+
+    .profile-social-name {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text);
+    }
+
+    .profile-social-url {
+      font-size: var(--font-size-xs);
+      color: var(--color-text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .profile-header-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .profile-info {
+        padding-top: var(--space-2);
+      }
+
+      .profile-stats {
+        justify-content: center;
+      }
+
+      .profile-social-links {
+        grid-template-columns: 1fr;
+      }
+
+      .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-3);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="navbar-inner">
+      <button class="navbar-mobile-toggle" aria-label="Toggle menu" onclick="toggleSidebar()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+      <a href="../index.html" class="navbar-brand" aria-label="FaceProfile Home">
+        <div class="navbar-brand-icon" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12h.01M15 12h.01M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/>
+          </svg>
+        </div>
+        FaceProfile
+      </a>
+      <div class="navbar-actions">
+        <div class="navbar-user">
+          <div class="avatar avatar-sm">JS</div>
+          <span class="navbar-user-name">John Smith</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Dashboard navigation">
+    <div class="sidebar-inner">
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">Main</p>
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            Dashboard
+          </a>
+          <a href="search.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <path d="m21 21-4.3-4.3"/>
+            </svg>
+            Search
+          </a>
+          <a href="profile.html" class="sidebar-link active">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            My Profile
+          </a>
+        </nav>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-section-title">Account</p>
+        <nav class="sidebar-nav">
+          <a href="profile-edit.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+            </svg>
+            Edit Profile
+          </a>
+          <a href="privacy.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Privacy Center
+          </a>
+          <a href="settings.html" class="sidebar-link">
+            <svg class="sidebar-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Settings
+          </a>
+        </nav>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="page-content profile-page">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <h1 class="profile-title">My Profile</h1>
+        <a href="profile-edit.html" class="btn btn-secondary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+          </svg>
+          Edit Profile
+        </a>
+      </div>
+
+      <!-- Profile Card -->
+      <div class="profile-card">
+        <div class="profile-banner"></div>
+        <div class="profile-content">
+          <div class="profile-header-info">
+            <div class="profile-avatar">
+              <div class="avatar">JS</div>
+            </div>
+            <div class="profile-info">
+              <h2 class="profile-name">John Smith</h2>
+              <p class="profile-job-title">Software Developer</p>
+              <div class="profile-stats">
+                <div class="profile-stat">
+                  <div class="profile-stat-value">12</div>
+                  <div class="profile-stat-label">Skills</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value">4</div>
+                  <div class="profile-stat-label">Projects</div>
+                </div>
+                <div class="profile-stat">
+                  <div class="profile-stat-value">6</div>
+                  <div class="profile-stat-label">Links</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bio -->
+          <div class="profile-section">
+            <h3 class="profile-section-title">About</h3>
+            <p class="profile-bio">
+              Full-stack developer passionate about building accessible and privacy-focused applications. Open source contributor with 5+ years of experience in React, Node.js, and Python. Advocate for ethical AI and user privacy.
+            </p>
+          </div>
+
+          <!-- Skills -->
+          <div class="profile-section">
+            <h3 class="profile-section-title">Skills</h3>
+            <div class="profile-skills">
+              <span class="profile-skill">React</span>
+              <span class="profile-skill">Node.js</span>
+              <span class="profile-skill">Python</span>
+              <span class="profile-skill">TypeScript</span>
+              <span class="profile-skill">PostgreSQL</span>
+              <span class="profile-skill">AWS</span>
+              <span class="profile-skill">Docker</span>
+              <span class="profile-skill">Git</span>
+              <span class="profile-skill">REST APIs</span>
+              <span class="profile-skill">GraphQL</span>
+              <span class="profile-skill">CI/CD</span>
+              <span class="profile-skill">Agile</span>
+            </div>
+          </div>
+
+          <!-- Projects -->
+          <div class="profile-section">
+            <h3 class="profile-section-title">Projects</h3>
+            <div class="profile-projects">
+              <div class="profile-project">
+                <h4 class="profile-project-name">PrivacyKit</h4>
+                <p class="profile-project-description">
+                  An open-source toolkit for building privacy-first web applications. Includes consent management, data encryption, and user control utilities.
+                </p>
+              </div>
+              <div class="profile-project">
+                <h4 class="profile-project-name">Ethical AI Framework</h4>
+                <p class="profile-project-description">
+                  A framework for evaluating and implementing ethical AI practices in production systems. Focuses on transparency, fairness, and user consent.
+                </p>
+              </div>
+              <div class="profile-project">
+                <h4 class="profile-project-name">ConsentManager</h4>
+                <p class="profile-project-description">
+                  A lightweight JavaScript library for managing user consent preferences with GDPR and CCPA compliance built-in.
+                </p>
+              </div>
+              <div class="profile-project">
+                <h4 class="profile-project-name">DevDashboard</h4>
+                <p class="profile-project-description">
+                  A customizable developer dashboard for tracking projects, contributions, and activity across multiple platforms.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Links -->
+          <div class="profile-section">
+            <h3 class="profile-section-title">Connect</h3>
+            <div class="profile-social-links">
+              <a href="#" class="profile-social-link" target="_blank" rel="noopener noreferrer">
+                <svg class="profile-social-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <div>
+                  <p class="profile-social-name">GitHub</p>
+                  <p class="profile-social-url">github.com/johnsmith</p>
+                </div>
+              </a>
+              <a href="#" class="profile-social-link" target="_blank" rel="noopener noreferrer">
+                <svg class="profile-social-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                <div>
+                  <p class="profile-social-name">LinkedIn</p>
+                  <p class="profile-social-url">linkedin.com/in/johnsmith</p>
+                </div>
+              </a>
+              <a href="#" class="profile-social-link" target="_blank" rel="noopener noreferrer">
+                <svg class="profile-social-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+                <div>
+                  <p class="profile-social-name">X (Twitter)</p>
+                  <p class="profile-social-url">@johnsmith</p>
+                </div>
+              </a>
+              <a href="#" class="profile-social-link" target="_blank" rel="noopener noreferrer">
+                <svg class="profile-social-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+                <div>
+                  <p class="profile-social-name">Website</p>
+                  <p class="profile-social-url">johnsmith.dev</p>
+                </div>
+              </a>
+              <a href="#" class="profile-social-link" target="_blank" rel="noopener noreferrer">
+                <svg class="profile-social-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+                <div>
+                  <p class="profile-social-name">Instagram</p>
+                  <p class="profile-social-url">@johnsmith</p>
+                </div>
+              </a>
+              <a href="#" class="profile-social-link" target="_blank" rel="noopener noreferrer">
+                <svg class="profile-social-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+                <div>
+                  <p class="profile-social-name">Facebook</p>
+                  <p class="profile-social-url">facebook.com/johnsmith</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
