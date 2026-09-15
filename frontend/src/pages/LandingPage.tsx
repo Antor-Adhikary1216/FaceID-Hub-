@@ -1,6 +1,20 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/stores/auth.store";
+import LoginRequiredPopup from "@/components/ui/LoginRequiredPopup";
 
 export default function LandingPage() {
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
+  const navigate = useNavigate();
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated);
+
+  const handleStartSearching = () => {
+    if (isAuthenticated) {
+      navigate("/search");
+    } else {
+      setShowLoginPopup(true);
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -57,12 +71,12 @@ export default function LandingPage() {
             over your biometric data.
           </p>
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              to="/search"
-              className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-[#1a7a5c] text-white font-semibold hover:bg-[#15644a] dark:bg-primary-500 dark:hover:bg-primary-600 transition-colors shadow-lg text-lg"
+            <button
+              onClick={handleStartSearching}
+              className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-[#1a7a5c] text-white font-semibold hover:bg-[#15644a] dark:bg-primary-500 dark:hover:bg-primary-600 transition-colors shadow-lg text-lg cursor-pointer"
             >
               Start Searching
-            </Link>
+            </button>
             <Link
               to="/signup"
               className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg bg-white/10 backdrop-blur-sm text-white font-semibold border border-white/25 hover:bg-white/20 transition-colors text-lg"
@@ -346,6 +360,11 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+      {/* Login Required Popup */}
+      <LoginRequiredPopup
+        isOpen={showLoginPopup}
+        onClose={() => setShowLoginPopup(false)}
+      />
     </div>
   );
 }
